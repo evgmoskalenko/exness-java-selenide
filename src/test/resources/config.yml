@@ -1,0 +1,13 @@
+#browser: [chrome, phantomjs, firefox]
+#resolution:
+#  large: 1200px
+#  default: 980px
+#  portrait_tablets: 768px
+#  phones_to_tablets: 767px
+#  phones: 480px
+
+environment:
+  prod:
+    baseUrl: https://www.exness.com
+  dev:
+    baseUrl: https://www.exness.dev
