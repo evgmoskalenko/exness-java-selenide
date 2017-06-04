@@ -1,7 +1,6 @@
 package com.exness.app.utils.report;
 
 import com.exness.app.utils.properties.SystemProperty;
-import com.exness.app.wrappers.BaseTest;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,9 +28,10 @@ public class AllurePropertiesUtil {
             if(System.getenv("BUILD_URL") != null) {
                 props.setProperty("Jenkins build URL", System.getenv("BUILD_URL"));
             }
-            if(BaseTest.userAgent != null) {
-                props.setProperty("UserAgent", BaseTest.userAgent);
-            }
+
+            //if(BaseTest.userAgent != null) {
+            //    props.setProperty("UserAgent", BaseTest.userAgent);
+            //}
 
             props.store(fos, "See https://github.com/allure-framework/allure-app/wiki/Environment");
 

@@ -62,7 +62,7 @@
     </properties>
 
     <dependencies>
-        <!--&lt;!&ndash; Library downloads the latest version of the WebDriver binary you need and export the proper Java system variable&ndash;&gt;-->
+        <!-- Library downloads the latest version of the WebDriver binary you need and export the proper Java system variable-->
         <!--<dependency>-->
             <!--<groupId>io.github.bonigarcia</groupId>-->
             <!--<artifactId>webdrivermanager</artifactId>-->
@@ -205,15 +205,16 @@
                 </dependencies>
             </plugin>
 
-            <!--Needed only to show reports locally. Run jetty:run and open localhost:8080 to show the report-->
+            <!--Needed only to show reports locally.
+                Run jetty:run and open localhost:8080 to show the report-->
             <plugin>
-                <groupId>org.mortbay.jetty</groupId>
+                <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>8.1.16.v20140903</version>
+                <version>9.2.10.v20150310</version>
                 <configuration>
-                    <webAppSourceDirectory>${project.build.directory}/site/allure-maven-plugin</webAppSourceDirectory>
-                    <stopKey/>
-                    <stopPort/>
+                    <webAppSourceDirectory>${project.build.directory}/site</webAppSourceDirectory>
+                    <stopKey>stop</stopKey>
+                    <stopPort>1234</stopPort>
                 </configuration>
             </plugin>
         </plugins>

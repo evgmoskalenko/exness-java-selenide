@@ -68,7 +68,7 @@ public abstract class BaseTest implements TestCase {
         try {
             configureDriverBasedOnParams();
             logExecutionOrder(testMethod);
-            setUserAgent();
+//            setUserAgent();
         } catch (Exception e) {
             e.printStackTrace();
         }
