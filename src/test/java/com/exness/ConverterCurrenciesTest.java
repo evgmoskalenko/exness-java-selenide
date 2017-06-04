@@ -8,7 +8,7 @@ import ru.yandex.qatools.allure.annotations.Features;
 import ru.yandex.qatools.allure.annotations.Stories;
 import ru.yandex.qatools.allure.annotations.Title;
 
-import static com.exness.model.Currencies.AUD;
+import static com.exness.model.Currencies.*;
 import static com.exness.pages.tools.ConverterToolPage.CurrenciesTabs.CURR_TAB_FROM;
 import static com.exness.pages.tools.ConverterToolPage.CurrenciesTabs.CURR_TAB_TO;
 
@@ -26,13 +26,13 @@ public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupp
         // --------------------- Test Case ----------------------//
         ConverterToolPage results = converterToolPage().openPage()
                 .chooseCurrencyConverterTab(CURR_TAB_FROM)
-                    .findCurrencyFor("GBP")
+                    .findCurrencyFor(GBP.getShortProps())
                     .chooseCurrencyFromSearchResult()
                     .setTabCurrencyValue("150");
 
         double actualResult = results
                 .chooseCurrencyConverterTab(CURR_TAB_TO)
-                    .findCurrencyFor("USD")
+                    .findCurrencyFor(USD.getShortProps())
                     .chooseCurrencyFromSearchResult()
                     .getTabCurrencyValue();
 
@@ -54,11 +54,11 @@ public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupp
 
         double actualResult = results
                 .chooseCurrencyConverterTab(CURR_TAB_FROM)
-                    .findCurrencyFor("GBP")
+                    .findCurrencyFor(GBP.getShortProps())
                     .chooseCurrencyFromSearchResult()
                     .setTabCurrencyValue("1")
                 .chooseCurrencyConverterTab(CURR_TAB_TO)
-                    .findCurrencyFor("USD")
+                    .findCurrencyFor(USD.getShortProps())
                     .chooseCurrencyFromSearchResult()
                 .getTabCurrencyValue();
 
@@ -78,16 +78,42 @@ public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupp
         // --------------------- Test Case ----------------------//
         ConverterToolPage results = converterToolPage().openPage()
                 .chooseCurrencyConverterTab(CURR_TAB_FROM)
-                .chooseCurrencyFromPopularList("EUR")
-                .setTabCurrencyValue("150.500");
+                    .chooseCurrencyFromPopularList(EUR.getShortProps())
+                    .setTabCurrencyValue("150.500");
 
         double actualResult = results
                 .chooseCurrencyConverterTab(CURR_TAB_TO)
-                .chooseCurrencyFromPopularList("USD")
-                .getTabCurrencyValue();
+                    .chooseCurrencyFromPopularList(USD.getShortProps())
+                    .getTabCurrencyValue();
 
         double expectedResult = results
                 .getConvertedCurrencyValue(150.500, currencyBid, currencyAsk);
+
+        verifyEquals(actualResult, expectedResult);
+    }
+
+    @Title("User should be able to convert currency with semicolon value")
+    @Test(groups = "convert_currencies", priority = 25)
+    public void userShouldBeAbleToConvertCurrencyWithSemicolonValue() {
+        // --------------------- Test Data ----------------------//
+        double currencyBid = 1.28914;
+        double currencyAsk = 1.28966;
+
+        // --------------------- Test Case ----------------------//
+        ConverterToolPage results = converterToolPage().openPage();
+
+        double actualResult = results
+                .chooseCurrencyConverterTab(CURR_TAB_FROM)
+                    .findCurrencyFor(GBP.getShortProps())
+                    .chooseCurrencyFromSearchResult()
+                    .setTabCurrencyValue("15,55")
+                .chooseCurrencyConverterTab(CURR_TAB_TO)
+                    .findCurrencyFor(USD.getShortProps())
+                    .chooseCurrencyFromSearchResult()
+                .getTabCurrencyValue();
+
+        double expectedResult = results
+                .getConvertedCurrencyValue(15.55, currencyBid, currencyAsk);
 
         verifyEquals(actualResult, expectedResult);
     }
@@ -98,7 +124,7 @@ public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupp
         // --------------------- Test Case ----------------------//
         ConverterToolPage results = converterToolPage().openPage()
                 .chooseCurrencyConverterTab(CURR_TAB_FROM)
-                    .chooseCurrencyFromPopularList("AUD");
+                    .chooseCurrencyFromPopularList(AUD.getShortProps());
 
         verifyEquals(results.converterTabCurrencyName().text(), AUD.getShortProps());
         verifyEquals(results.converterPopularItemCurrencyName().text(), AUD.getShortProps());
@@ -112,7 +138,7 @@ public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupp
         // --------------------- Test Case ----------------------//
         ConverterToolPage results = converterToolPage().openPage()
                 .chooseCurrencyConverterTab(CURR_TAB_FROM)
-                    .setCurrencyFromCommonList("Австралийский доллар");
+                    .setCurrencyFromCommonList(AUD.getLongProps());
 
         verifyEquals(results.converterTabCurrencyName().text(), AUD.getShortProps());
         verifyEquals(results.converterPopularItemCurrencyName().text(), AUD.getShortProps());
@@ -126,10 +152,10 @@ public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupp
         // --------------------- Test Case ----------------------//
         ConverterToolPage results = converterToolPage().openPage()
                 .chooseCurrencyConverterTab(CURR_TAB_FROM)
-                    .chooseCurrencyFromPopularList("AUD")
+                    .chooseCurrencyFromPopularList(AUD.getShortProps())
                     .setTabCurrencyValue("15.55")
                 .chooseCurrencyConverterTab(CURR_TAB_TO)
-                    .chooseCurrencyFromPopularList("EUR")
+                    .chooseCurrencyFromPopularList(EUR.getShortProps())
                 .cleanConverterTabByButton();
 
         verifyEquals(results.chooseCurrencyConverterTab(CURR_TAB_FROM).getTabCurrencyValue(), 0);
@@ -144,7 +170,7 @@ public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupp
         ConverterToolPage results = converterToolPage().openPage()
                 .chooseCurrencyConverterTab(CURR_TAB_FROM)
                     .setTabCurrencyValue("125")
-                    .findCurrencyFor("AUD")
+                    .findCurrencyFor(AUD.getShortProps())
                 .chooseCurrencyFromSearchResult();
 
         results.getCurrenciesFromCommonList().shouldHaveSize(1);
@@ -162,8 +188,8 @@ public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupp
         // --------------------- Test Case ----------------------//
         ConverterToolPage results = converterToolPage().openPage()
                 .chooseCurrencyConverterTab(CURR_TAB_FROM)
-                .setTabCurrencyValue("125")
-                .findCurrencyFor("Австралийский доллар")
+                    .setTabCurrencyValue("125")
+                    .findCurrencyFor(AUD.getLongProps())
                     .chooseCurrencyFromSearchResult();
 
         results.getCurrenciesFromCommonList().shouldHaveSize(1);
