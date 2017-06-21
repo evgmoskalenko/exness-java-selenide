@@ -4,9 +4,9 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import com.exness.app.utils.converter.CurrenciesUtils;
 import com.exness.app.wrappers.BasePage;
+import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.yandex.qatools.allure.annotations.Step;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -40,7 +40,7 @@ public class ConverterToolPage extends BasePage<ConverterToolPage> {
         return $$(".converter-popularItem");
     }
 
-    @Step("Choose currencies converter tab: \"{0}\"")
+    @Step("Choose currencies converter tab: \"{tab}\"")
     public ConverterToolPage chooseCurrencyConverterTab(CurrenciesTabs tab) {
         switch (tab) {
             case CURR_TAB_FROM:
@@ -64,19 +64,19 @@ public class ConverterToolPage extends BasePage<ConverterToolPage> {
         return new BigDecimal(convertedValue).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
-    @Step("Fill currencies value \"{0}\"")
+    @Step("Fill currencies value \"{currencyValue}\"")
     public ConverterToolPage setTabCurrencyValue(String currencyValue) {
         $(".converter-tabItem__selected").$(".ui-input").val(currencyValue);
         return this;
     }
 
-    @Step("Select currency: \"{0}\" from 'popular list'")
+    @Step("Select currency: \"{popularCurrencyShortProps}\" from popular list")
     public ConverterToolPage chooseCurrencyFromPopularList(String popularCurrencyShortProps) {
         getCurrenciesFromPopularList().find(matchesText(popularCurrencyShortProps)).click();
         return this;
     }
 
-    @Step("Select currency: \"{0}\" from 'common list'")
+    @Step("Select currency: \"{converterCurrenciesValue}\" from common list")
     public ConverterToolPage setCurrencyFromCommonList(String converterCurrenciesValue) {
         getCurrenciesFromCommonList().find(matchesText(converterCurrenciesValue)).click();
         return this;
@@ -108,13 +108,13 @@ public class ConverterToolPage extends BasePage<ConverterToolPage> {
         return this;
     }
 
-    @Step("Find currency \"{0}\"")
+    @Step("Find currency \"{theCurrencyShortProps}\"")
     public ConverterToolPage findCurrencyFor(String theCurrencyShortProps) {
         $("#find-currencies").val(theCurrencyShortProps);
         return this;
     }
 
-    @Step("Select currencies from search result")
+    @Step("Choose currencies from search result")
     public ConverterToolPage chooseCurrencyFromSearchResult() {
         getCurrenciesFromCommonList().get(0).click();
         return this;

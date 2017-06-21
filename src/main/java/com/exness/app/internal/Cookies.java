@@ -1,9 +1,9 @@
 package com.exness.app.internal;
 
+import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.Cookie;
-import ru.yandex.qatools.allure.annotations.Step;
 
 import static com.codeborne.selenide.Selenide.sleep;
 import static com.exness.app.wrappers.BaseTest.getDriver;

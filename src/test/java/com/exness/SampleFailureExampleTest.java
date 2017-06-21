@@ -1,17 +1,16 @@
 package com.exness;
 
-
 import com.exness.app.internal.PageObjectsSupplier;
 import com.exness.app.wrappers.BaseTest;
 import com.exness.pages.tools.ConverterToolPage;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.testng.annotations.Test;
-import ru.yandex.qatools.allure.annotations.Features;
-import ru.yandex.qatools.allure.annotations.Stories;
 
 import static com.exness.pages.tools.ConverterToolPage.CurrenciesTabs.CURR_TAB_FROM;
 
-@Features("Currencies converter")
-@Stories("Sample failure tests for example. Allure report..")
+@Feature("Currencies converter")
+@Story("Sample failure tests for example. Allure report..")
 public class SampleFailureExampleTest extends BaseTest implements PageObjectsSupplier {
 
     @Test(groups = "failure_currencies_tests", priority = 10)

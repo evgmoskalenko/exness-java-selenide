@@ -32,22 +32,23 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Dependencies Versions -->
-        <compiler.version>1.8</compiler.version>
+        <java.version>1.8</java.version>
         <testng.version>6.8.13</testng.version>
         <allure.version>1.5.0</allure.version>
+        <allure-java-annotations.version>1.5.2</allure-java-annotations.version>
         <htmlelements.java.version>1.13</htmlelements.java.version>
         <selenide.version>4.4.3</selenide.version>
-        <aspectj.version>1.8.9</aspectj.version>
         <video-recorder-testng.version>LATEST</video-recorder-testng.version>
         <rendersnake.version>1.9.0</rendersnake.version>
         <commons-collections.version>3.2.1</commons-collections.version>
         <javax-mail.version>1.5.0-b01</javax-mail.version>
 
         <!--Plugin Versions-->
-        <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
-        <maven-surefire-plugin.version>2.19</maven-surefire-plugin.version>
-        <allure-maven-plugin.version>2.2</allure-maven-plugin.version>
-        <versions-maven-plugin.version>2.2</versions-maven-plugin.version>
+        <compiler.plugin.version>3.6.0</compiler.plugin.version>
+        <surefire.plugin.version>2.19.1</surefire.plugin.version>
+        <allure.version>2.0-BETA6</allure.version>
+        <aspectj.version>1.8.10</aspectj.version>
+        <maven-plugin.version>2.2</maven-plugin.version>
         <logging.log4j>2.1</logging.log4j>
         <slf4j-simple>1.7.18</slf4j-simple>
         <yaml.config.version>1.17</yaml.config.version>
@@ -55,20 +56,13 @@
         <!-- Directory Properties -->
         <resource-test.directory>${project.basedir}/src/test/resources</resource-test.directory>
         <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
-        <allure.report.directory>${project.build.directory}/site/allure-report</allure.report.directory>
 
         <!-- Management System Properties -->
-        <!--<allure.issues.tracker.pattern>http://jira.exness.com:8080/browse/%s</allure.issues.tracker.pattern>-->
+        <tms>https://jira.exness.com:8080/browse/{}</tms>
+        <issues.tracker>https://jira.exness.com:8080/browse/{}</issues.tracker>
     </properties>
 
     <dependencies>
-        <!-- Library downloads the latest version of the WebDriver binary you need and export the proper Java system variable-->
-        <!--<dependency>-->
-            <!--<groupId>io.github.bonigarcia</groupId>-->
-            <!--<artifactId>webdrivermanager</artifactId>-->
-            <!--<version>1.5.0</version>-->
-        <!--</dependency>-->
-
         <!-- Selenide-->
         <dependency>
             <groupId>com.codeborne</groupId>
@@ -87,14 +81,14 @@
 
         <!-- Allure -->
         <dependency>
-            <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-testng-adaptor</artifactId>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
             <version>${allure.version}</version>
         </dependency>
         <dependency>
-            <groupId>ru.yandex.qatools.htmlelements</groupId>
-            <artifactId>htmlelements-java</artifactId>
-            <version>${htmlelements.java.version}</version>
+            <groupId>ru.yandex.qatools.allure</groupId>
+            <artifactId>allure-java-annotations</artifactId>
+            <version>${allure-java-annotations.version}</version>
         </dependency>
 
         <!-- VideoRecorder-->
@@ -165,36 +159,55 @@
         </resources>
 
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
+                <version>${compiler.plugin.version}</version>
                 <configuration>
-                    <source>${compiler.version}</source>
-                    <target>${compiler.version}</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
 
-            <!-- Allure -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
+                <version>${surefire.plugin.version}</version>
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
                     <detail>true</detail>
-                    <!--<forkCount>1C</forkCount>-->
-                    <!--<reuseForks>true</reuseForks>-->
                     <systemPropertyVariables>
                         <browser>${browser}</browser>
                     </systemPropertyVariables>
+                    <properties>
+                        <property>
+                            <name>usedefaultlisteners</name>
+                            <value>false</value>
+                        </property>
+                    </properties>
+                    <systemProperties>
+                        <property>
+                            <name>allure.results.directory</name>
+                            <value>${allure.results.directory}</value>
+                        </property>
+                        <property>
+                            <name>allure.link.issue.pattern</name>
+                            <value>${issues.tracker}</value>
+                        </property>
+                        <property>
+                            <name>allure.link.tms.pattern</name>
+                            <value>${tms}</value>
+                        </property>
+                    </systemProperties>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>
+                            ${project.basedir}/suites/${suiteFile}.xml
+                        </suiteXmlFile>
+                    </suiteXmlFiles>
                     <argLine>
                         -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
-                        <!-- -DBUILD_URL=${BUILD_URL}-->
                     </argLine>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>${project.basedir}/suites/${suiteFile}.xml</suiteXmlFile>
-                    </suiteXmlFiles>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -205,18 +218,18 @@
                 </dependencies>
             </plugin>
 
-            <!--Needed only to show reports locally.
-                Run jetty:run and open localhost:8080 to show the report-->
-            <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.2.10.v20150310</version>
-                <configuration>
-                    <webAppSourceDirectory>${project.build.directory}/site</webAppSourceDirectory>
-                    <stopKey>stop</stopKey>
-                    <stopPort>1234</stopPort>
-                </configuration>
-            </plugin>
+            <!--&lt;!&ndash;Needed only to show reports locally.-->
+                <!--Run jetty:run and open localhost:8080 to show the report&ndash;&gt;-->
+            <!--<plugin>-->
+                <!--<groupId>org.eclipse.jetty</groupId>-->
+                <!--<artifactId>jetty-maven-plugin</artifactId>-->
+                <!--<version>9.2.10.v20150310</version>-->
+                <!--<configuration>-->
+                    <!--<webAppSourceDirectory>${project.build.directory}/site</webAppSourceDirectory>-->
+                    <!--<stopKey>stop</stopKey>-->
+                    <!--<stopPort>1234</stopPort>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 
@@ -227,13 +240,14 @@
             <plugin>
                 <groupId>ru.yandex.qatools.allure</groupId>
                 <artifactId>allure-maven-plugin</artifactId>
-                <version>${allure-maven-plugin.version}</version>
+                <configuration>
+                    <reportDirectory>site</reportDirectory>
+                </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
-                <version>${versions-maven-plugin.version}</version>
+                <version>${maven-plugin.version}</version>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -246,7 +260,9 @@
             </plugin>
         </plugins>
 
-        <outputDirectory>${basedir}/target/site</outputDirectory>
+        <!--<outputDirectory>-->
+            <!--${basedir}/target/site-->
+        <!--</outputDirectory>-->
     </reporting>
 
     <profiles>

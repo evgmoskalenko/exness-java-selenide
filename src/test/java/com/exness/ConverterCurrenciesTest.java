@@ -1,22 +1,26 @@
 package com.exness;
 
+import com.exness.app.internal.BrowserConsole;
 import com.exness.app.internal.PageObjectsSupplier;
 import com.exness.app.wrappers.BaseTest;
 import com.exness.pages.tools.ConverterToolPage;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import org.testng.annotations.Test;
-import ru.yandex.qatools.allure.annotations.Features;
-import ru.yandex.qatools.allure.annotations.Stories;
-import ru.yandex.qatools.allure.annotations.Title;
 
 import static com.exness.model.Currencies.*;
 import static com.exness.pages.tools.ConverterToolPage.CurrenciesTabs.CURR_TAB_FROM;
 import static com.exness.pages.tools.ConverterToolPage.CurrenciesTabs.CURR_TAB_TO;
 
-@Features("Converter")
-@Stories("Currencies converter")
-public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupplier {
 
-    @Title("User should be able to convert currency")
+@Feature("Converter")
+@Story("Currencies converter")
+public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupplier, BrowserConsole {
+
+    //@Title("User should be able to convert currency")
+    @Severity(SeverityLevel.CRITICAL)
     @Test(groups = "convert_currencies", priority = 10)
     public void userShouldBeAbleToConvertCurrency() {
         // --------------------- Test Data ----------------------//
@@ -42,7 +46,8 @@ public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupp
         verifyEquals(actualResult, expectedResult);
     }
 
-    @Title("Currency rounding off")
+    //@Title("Currency rounding off")
+    @Severity(SeverityLevel.CRITICAL)
     @Test(groups = "convert_currencies", priority = 15)
     public void currencyRoundingOff() {
         // --------------------- Test Data ----------------------//
@@ -68,7 +73,8 @@ public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupp
         verifyEquals(actualResult, expectedResult);
     }
 
-    @Title("User should be able to convert currency with double value")
+    //@Title("User should be able to convert currency with double value")
+    @Severity(SeverityLevel.CRITICAL)
     @Test(groups = "convert_currencies", priority = 20)
     public void userShouldBeAbleToConvertCurrencyWithDoubleValue() {
         // --------------------- Test Data ----------------------//
@@ -92,7 +98,8 @@ public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupp
         verifyEquals(actualResult, expectedResult);
     }
 
-    @Title("User should be able to convert currency with semicolon value")
+    //@Title("User should be able to convert currency with semicolon value")
+    @Severity(SeverityLevel.MINOR)
     @Test(groups = "convert_currencies", priority = 25)
     public void userShouldBeAbleToConvertCurrencyWithSemicolonValue() {
         // --------------------- Test Data ----------------------//
@@ -118,7 +125,8 @@ public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupp
         verifyEquals(actualResult, expectedResult);
     }
 
-    @Title("User should be able to choose currencies from popular list")
+    //@Title("User should be able to choose currencies from popular list")
+    @Severity(SeverityLevel.NORMAL)
     @Test(groups = "selecting_currencies", priority = 30)
     public void userShouldBeAbleToChooseCurrenciesFromPopularList() {
         // --------------------- Test Case ----------------------//
@@ -132,7 +140,8 @@ public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupp
         verifyEquals(results.converterCurrencyNameFromCommonList().text(), AUD.getLongProps());
     }
 
-    @Title("User should be able to choose currencies from common list")
+    //@Title("User should be able to choose currencies from common list")
+    @Severity(SeverityLevel.NORMAL)
     @Test(groups = "selecting_currencies", priority = 40)
     public void userShouldBeAbleToChooseCurrenciesFromCommonList() {
         // --------------------- Test Case ----------------------//
@@ -146,7 +155,8 @@ public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupp
         verifyEquals(results.converterCurrencyNameFromCommonList().text(), AUD.getLongProps());
     }
 
-    @Title("User should be able to clean convert tabs")
+    //@Title("User should be able to clean convert tabs")
+    @Severity(SeverityLevel.NORMAL)
     @Test(groups = "clear_converter_tabs", priority = 50)
     public void userShouldBeAbleToCleanConverterTabs() {
         // --------------------- Test Case ----------------------//
@@ -163,7 +173,8 @@ public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupp
 
     }
 
-    @Title("User should be able to find currency by short props")
+    //@Title("User should be able to find currency by short props")
+    @Severity(SeverityLevel.NORMAL)
     @Test(groups = "find_currencies", priority = 60)
     public void userShouldBeAbleToFindPopularCurrencyByShortProps() {
         // --------------------- Test Case ----------------------//
@@ -182,7 +193,8 @@ public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupp
         verifyEquals(results.converterCurrencyNameFromCommonList().text(), AUD.getLongProps());
     }
 
-    @Title("User should be able to find currency by long props")
+    //@Title("User should be able to find currency by long props")
+    @Severity(SeverityLevel.NORMAL)
     @Test(groups = "find_currencies", priority = 70)
     public void userShouldBeAbleToFindCurrencyByLongProps() {
         // --------------------- Test Case ----------------------//
@@ -202,7 +214,8 @@ public class ConverterCurrenciesTest extends BaseTest implements PageObjectsSupp
         verifyEquals(results.converterCurrencyNameFromCommonList().text(), AUD.getLongProps());
     }
 
-    @Title("User should't find a currency which is not in the list")
+    //@Title("User should't find a currency which is not in the list")
+    @Severity(SeverityLevel.NORMAL)
     @Test(groups = "find_currencies", priority = 80)
     public void userShouldNotFindCurrencyWhichIsNotInTheList() {
         // --------------------- Test Case ----------------------//

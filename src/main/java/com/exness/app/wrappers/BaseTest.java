@@ -7,7 +7,6 @@ import com.codeborne.selenide.WebDriverRunner;
 import com.exness.app.internal.GenericPage;
 import com.exness.app.internal.TestCase;
 import com.exness.app.listeners.EventListener;
-import com.exness.app.listeners.Highlighter;
 import com.exness.app.listeners.ScreenshotListener;
 import com.exness.app.listeners.TestListener;
 import com.exness.app.utils.report.AllurePropertiesUtil;
@@ -37,7 +36,7 @@ public abstract class BaseTest implements TestCase {
     @BeforeSuite(alwaysRun = true)
     public void setUp() {
         addListener(new EventListener());
-        addListener(new Highlighter());
+//        addListener(new Highlighter());
 //        configureVideoRecorder(false);
     }
 

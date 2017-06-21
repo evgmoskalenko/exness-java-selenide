@@ -1,14 +1,13 @@
 package com.exness.app.internal;
 
 import com.exness.app.wrappers.BaseTest;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.List;
 
-import static com.exness.app.utils.report.AllureReport.htmlToAllureReport;
-import static com.exness.app.utils.report.AllureReport.textToAllureAsStep;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -28,52 +27,47 @@ public interface Validator {
         }
     }
 
+    //TODO: refactoring this impl
     @Step("Verify browser console log entry")
     default void verifyBrowserConsoleLogEntry(List<String> listBrowserConsoleLog) {
         boolean condition = listBrowserConsoleLog.isEmpty();
         if (!condition) {
-            htmlToAllureReport("Browser console log entry", String.join("<br><br>", listBrowserConsoleLog));
+            Allure.addAttachment("Browser console log entry", "text/html",
+                                 String.join("<br><br>", listBrowserConsoleLog));
         }
         assertTrue(condition);
     }
 
-    @Step("Verify that \"{1}\" = \"{0}\"")
+    @Step("Verify that \"{expected}\" = \"{actual}\"")
     default void verifyEquals(final String actual, final String expected, final String message) {
-        textToAllureAsStep("Actual", actual);
-        textToAllureAsStep("Expected", expected);
-        textToAllureAsStep("Message", message);
         assertEquals(actual, expected, message);
     }
 
-    @Step("Verify that \"{1}\" = \"{0}\"")
+    @Step("Verify that \"{expected}\" = \"{actual}\"")
     default void verifyEquals(final String actual, final String expected) {
-        textToAllureAsStep("Actual", actual);
-        textToAllureAsStep("Expected", expected);
         assertEquals(actual, expected);
     }
 
-    @Step("Verify that \"{1}\" = \"{0}\"")
+    @Step("Verify that \"{expected}\" = \"{actual}\"")
     default void verifyEquals(final double actual, final double expected) {
-        textToAllureAsStep("Actual", actual);
-        textToAllureAsStep("Expected", expected);
         assertEquals(actual, expected);
     }
 
-    @Step("Verify that \"{0}\" contains \"{1}\"")
+    //TODO: refactoring this impl
+    @Step("Verify that \"{actual}\" contains \"{containsString}\"")
     default void verifyTextContains(final String actual, final String containsString) {
-        htmlToAllureReport("Actual: "+actual+"<br><br>Contains string: "+containsString);
+        Allure.addAttachment("HTML attachments", "text/html",
+                             "Actual: " + actual + "<br><br>Contains string: " + containsString);
         assertTrue(actual.contains(containsString));
     }
 
-    @Step("Verify that \"{0}\" not contains \"{1}\"")
+    @Step("Verify that \"{actual}\" not contains \"{containsString}\"")
     default void verifyTextNotContains(final String actual, final String containsString) {
         assertTrue(!actual.contains(containsString));
     }
 
-    @Step("Verify that url \"{0}\" contains \"{1}\"")
+    @Step("Verify that url \"{actual}\" contains \"{containsString}\"")
     default void verifyUrlContains(final String actual, final String containsString) {
-        textToAllureAsStep("Actual", actual);
-        textToAllureAsStep("Expected", containsString);
         assertTrue(actual.contains(containsString));
     }
 

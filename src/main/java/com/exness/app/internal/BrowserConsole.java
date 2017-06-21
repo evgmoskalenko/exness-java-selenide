@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import static com.codeborne.selenide.Selenide.getWebDriverLogs;
 import static org.openqa.selenium.logging.LogType.BROWSER;
 
+//TODO: refactoring. Move to custom listener (beforeInvocation)
 public interface BrowserConsole {
 
     /**
