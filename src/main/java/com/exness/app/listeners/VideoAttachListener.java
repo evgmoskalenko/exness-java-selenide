@@ -33,7 +33,7 @@ public class VideoAttachListener extends VideoListener {
         if (shouldIntercept(result.getTestClass().getRealClass(), this.getClass())) {
             super.onTestFailure(result);
             Video video = result.getMethod().getConstructorOrMethod().getMethod().getDeclaredAnnotation(Video.class);
-            if (VideoRecorder.conf().isVideoEnabled())
+            if (VideoRecorder.conf().videoEnabled())
                 takeVideo();
         }
     }

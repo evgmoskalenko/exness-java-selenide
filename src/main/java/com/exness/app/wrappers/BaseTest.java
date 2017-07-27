@@ -1,8 +1,5 @@
 package com.exness.app.wrappers;
 
-import com.automation.remarks.video.enums.RecordingMode;
-import com.automation.remarks.video.enums.VideoSaveMode;
-import com.automation.remarks.video.recorder.VideoRecorder;
 import com.codeborne.selenide.WebDriverRunner;
 import com.exness.app.internal.GenericPage;
 import com.exness.app.internal.TestCase;
@@ -40,18 +37,18 @@ public abstract class BaseTest implements TestCase {
 //        configureVideoRecorder(false);
     }
 
-    /**
-     * The method which configure video recorder for failure tests
-     * Listeners: VideoAttachListener.class
-     * @param recorderCondition - Switch status recorder: ON (true) / OFF (false)
-     */
-    private void configureVideoRecorder(boolean recorderCondition) {
-        VideoRecorder.conf().withVideoFolder("target/video")
-                .videoEnabled(recorderCondition)
-                .withRecordMode(RecordingMode.ANNOTATED)
-                .withVideoSaveMode(VideoSaveMode.FAILED_ONLY)
-                .withFrameRate(1);
-    }
+//    /**
+//     * The method which configure video recorder for failure tests
+//     * Listeners: VideoAttachListener.class
+//     * @param recorderCondition - Switch status recorder: ON (true) / OFF (false)
+//     */
+//    private void configureVideoRecorder(boolean recorderCondition) {
+//        VideoRecorder.conf().folder()
+//                .videoEnabled(recorderCondition)
+//                .withRecordMode(RecordingMode.ANNOTATED)
+//                .withVideoSaveMode(VideoSaveMode.FAILED_ONLY)
+//                .withFrameRate(1);
+//    }
 
     /**
      * The methods which configure the browser once a test runs
