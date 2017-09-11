@@ -34,7 +34,7 @@
         <!-- Dependencies Versions -->
         <java.version>1.8</java.version>
         <testng.version>6.8.13</testng.version>
-        <allure.version>1.5.0</allure.version>
+        <allure.version>2.0-BETA17</allure.version>
         <allure-java-annotations.version>1.5.2</allure-java-annotations.version>
         <htmlelements.java.version>1.13</htmlelements.java.version>
         <selenide.version>4.4.3</selenide.version>
@@ -85,11 +85,6 @@
             <artifactId>allure-testng</artifactId>
             <version>${allure.version}</version>
         </dependency>
-        <dependency>
-            <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-java-annotations</artifactId>
-            <version>${allure-java-annotations.version}</version>
-        </dependency>
 
         <!-- VideoRecorder-->
         <dependency>
@@ -97,7 +92,6 @@
             <artifactId>video-recorder-testng</artifactId>
             <version>${video-recorder-testng.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.rendersnake</groupId>
             <artifactId>rendersnake</artifactId>
@@ -230,40 +224,49 @@
                     <!--<stopPort>1234</stopPort>-->
                 <!--</configuration>-->
             <!--</plugin>-->
+
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.8</version>
+                <configuration>
+                    <reportVersion>2.3.4</reportVersion>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
     <!-- Allure Reporting -->
-    <reporting>
-        <excludeDefaults>true</excludeDefaults>
-        <plugins>
-            <plugin>
-                <groupId>ru.yandex.qatools.allure</groupId>
-                <artifactId>allure-maven-plugin</artifactId>
-                <configuration>
-                    <reportDirectory>site</reportDirectory>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-                <version>${maven-plugin.version}</version>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>dependency-updates-report</report>
-                            <report>plugin-updates-report</report>
-                            <report>property-updates-report</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-        </plugins>
+    <!--<reporting>-->
+        <!--<excludeDefaults>true</excludeDefaults>-->
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>ru.yandex.qatools.allure</groupId>-->
+                <!--<artifactId>allure-maven-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<reportDirectory>site</reportDirectory>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>org.codehaus.mojo</groupId>-->
+                <!--<artifactId>versions-maven-plugin</artifactId>-->
+                <!--<version>${maven-plugin.version}</version>-->
+                <!--<reportSets>-->
+                    <!--<reportSet>-->
+                        <!--<reports>-->
+                            <!--<report>dependency-updates-report</report>-->
+                            <!--<report>plugin-updates-report</report>-->
+                            <!--<report>property-updates-report</report>-->
+                        <!--</reports>-->
+                    <!--</reportSet>-->
+                <!--</reportSets>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
 
-        <!--<outputDirectory>-->
-            <!--${basedir}/target/site-->
-        <!--</outputDirectory>-->
-    </reporting>
+        <!--&lt;!&ndash;<outputDirectory>&ndash;&gt;-->
+            <!--&lt;!&ndash;${basedir}/target/site&ndash;&gt;-->
+        <!--&lt;!&ndash;</outputDirectory>&ndash;&gt;-->
+    <!--</reporting>-->
 
     <profiles>
         <profile>
